@@ -35,18 +35,18 @@ class Player(pygame.sprite.Sprite):
         '''tốc độ player khi di chuyển tung và hoành'''
         #horizontal: hoành
         self.rect.x += self.direction.x * self.speed * dt
-        self.conllision('horizontal')
+        self.collision('horizontal')
 
         #vertical: tung
         self.direction.y += self.gravity / 2 * dt
         self.rect.y += self.direction.y * dt
         self.direction.y += self.gravity / 2 * dt
-        self.conllision('vertical')
+        self.collision('vertical')
 
 
 
 
-    def conllision(self, axis):
+    def collision(self, axis):
         '''Hàm để xử lý collision giữa player và sprite'''
         for sprite in self.collision_sprites:
             if sprite.rect.colliderect(self.rect):

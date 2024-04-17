@@ -8,7 +8,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption('Hai Tac Phieu Luu Ky')
+        pygame.display.set_caption('Hải Tặc Phiêu Lưu Ký')
         self.clock = pygame.time.Clock()
 
         '''tmx_map là map test '''
