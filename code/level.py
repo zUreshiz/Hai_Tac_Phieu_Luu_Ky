@@ -1,5 +1,5 @@
 from settings import *
-from sprites import Sprite
+from sprites import Sprite, MovingSprite
 from player import Player
 
 
@@ -20,7 +20,21 @@ class Level:
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name =='player':
                 Player((obj.x,obj.y), self.all_sprites, self.collision_sprites)
-
+        
+        #Moving Objects
+        for obj in tmx_map.get_layer_by_name('Moving Objects'):
+            if obj.name == 'helicopter':
+                '''xác định hướng di chuyển dựa trên chiều rộng và chiều cao của đối tượng'''
+                if obj.width > obj.height:  
+                    move_dir = 'x'
+                    start_pos = (obj.x, obj.y + obj.height / 2)
+                    end_pos = (obj.x + obj.width, obj.y + obj.height / 2)
+                else:
+                    move_dir = 'y'
+                    start_pos = (obj.x + obj.width /2, obj.y)
+                    end_pos = (obj.x + obj.width, obj.y + obj.height / 2)     
+                speed = obj.properties['speed']
+                MovingSprite((self.all_sprites, self.collision_sprites), start_pos, end_pos, move_dir, speed)  
 
 
     def run(self, dt):
