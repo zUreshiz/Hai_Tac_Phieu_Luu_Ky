@@ -7,6 +7,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, semi_collision_sprites):
         super().__init__(groups)
         self.image = pygame.image.load(join('.','graphics', 'player', 'idle','0.png'))
+        self.z = Z_LAYERS['main']
   
 
         #rects
@@ -31,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.timers = {
             'wall jump': Timer(400),
             'wall slide block': Timer(250),
-            'platform skip' : Timer(250)
+            'platform skip' : Timer(100)
         }
 
     def input(self):
