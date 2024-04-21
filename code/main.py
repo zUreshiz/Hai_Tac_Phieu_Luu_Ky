@@ -21,8 +21,8 @@ class Game:
     def import_assets(self):
         self.level_frames = {
             'flag': import_folder('.', 'graphics', 'level', 'flag'),
-            'saw': import_folder('.', 'graphics', 'enemies', 'saw', 'animation'),
-            'floor_spike': import_folder('.', 'graphics', 'enemies', 'floor_spike'),
+            'saw' : import_folder('.', 'graphics', 'enemies', 'saw', 'animation'),
+            'floor_spike': import_folder('.', 'graphics', 'enemies', 'floor_spikes'),
         }
 
 

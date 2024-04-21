@@ -39,10 +39,10 @@ class Level:
             else:
                 if obj.name in ('barrel', 'crate'):
                     Sprite((obj.x, obj.y), obj.image ,(self.all_sprites, self.collision_sprites))
-                # else:
-                #     if 'palm' not in obj.name:
-                #       frames = level_frames[obj.name]
-                #       AnimatedSprite((obj.x, obj.y), frames, self.all_sprites)
+                else:
+                    if 'palm' not in obj.name:
+                      frames = level_frames[obj.name]
+                      AnimatedSprite((obj.x, obj.y), frames, self.all_sprites)
 
 
         #Moving Objects
