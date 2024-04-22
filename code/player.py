@@ -4,11 +4,15 @@ from os.path import join
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, semi_collision_sprites):
+    def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames):
+        #general setup
         super().__init__(groups)
-        self.image = pygame.image.load(join('.','graphics', 'player', 'idle','0.png'))
         self.z = Z_LAYERS['main']
   
+        #img
+        self.frames, self.frame_index = frames, 0
+        self.state, self.facing_right = 'idle', True
+        self.image = self.frames[self.state][self.frame_index]
 
         #rects
         self.rect = self.image.get_frect(topleft = pos)
@@ -44,8 +48,10 @@ class Player(pygame.sprite.Sprite):
         if not self.timers['wall jump'].active:
             if keys[pygame.K_RIGHT] or keys[pygame.K_d]: 
                 input_vector.x += 1
+                self.facing_right = True
             if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                 input_vector.x -= 1
+                self.facing_right = False
             if keys[pygame.K_DOWN] or keys[pygame.K_s]:
                 self.timers['platform skip'].activate()
             # normalize để độ dài vector luôn là 1 
@@ -149,8 +155,10 @@ class Player(pygame.sprite.Sprite):
         for timer in self.timers.values():
             timer.update()
 
-
-
+    def animate(self, dt):
+        self.frame_index += ANIMATION_SPEED * dt
+        self.image = self.frames[self.state][int(self.frame_index%len(self.frames[self.state]))]
+        self.image = self.image if self.facing_right else pygame.transform.flip(self.image, True, False)
     def update(self, dt):
         self.old_rect = self.hitbox_rect.copy()
         self.update_timers()
@@ -158,3 +166,4 @@ class Player(pygame.sprite.Sprite):
         self.move(dt)
         self.platform_move(dt)
         self.check_contact()
+        self.animate(dt)
