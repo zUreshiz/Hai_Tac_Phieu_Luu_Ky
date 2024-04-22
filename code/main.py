@@ -25,7 +25,6 @@ class Game:
             'floor_spike': import_folder('.', 'graphics', 'enemies', 'floor_spikes'),
             'player': import_sub_folders('.', 'graphics', 'player')
         }
-        print(self.level_frames)
 
     def run(self):
         while True:
