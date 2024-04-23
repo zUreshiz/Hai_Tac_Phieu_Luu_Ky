@@ -19,7 +19,7 @@ class AnimatedSprite(Sprite):
 		self.image = self.frames[int(self.frame_index % len(self.frames))]
 
 	def update(self, dt):
-		self.animate(dt)
+		self.animate(dt) 
 
 class MovingSprite(Sprite):
     def __init__(self, groups, start_pos, end_pos, move_dir, speed):

@@ -23,9 +23,20 @@ class Game:
             'flag': import_folder('.', 'graphics', 'level', 'flag'),
             'saw' : import_folder('.', 'graphics', 'enemies', 'saw', 'animation'),
             'floor_spike': import_folder('.', 'graphics', 'enemies', 'floor_spikes'),
-            'player': import_sub_folders('.', 'graphics', 'player')
+            'palms': import_sub_folders('.', 'graphics', 'level', 'palms'),
+            'candle': import_folder('.', 'graphics', 'level', 'candle'),
+            'window': import_folder('.', 'graphics', 'level', 'window'),
+            'big_chain': import_folder('.', 'graphics', 'level', 'big_chain'),
+            'small_chain': import_folder('.', 'graphics', 'level', 'small_chain'),
+            'candle_light': import_folder('.', 'graphics', 'level', 'candle light'),
+            'player': import_sub_folders('.', 'graphics', 'player'),
+            'saw': import_folder('..', 'graphics', 'enemies', 'saw', 'animation'),
+            'saw_chain': import_image('..',  'graphics', 'enemies', 'saw', 'saw_chain'),
+            'helicopter': import_folder('..', 'graphics', 'level', 'helicopter'),
+            'boat': import_folder('..',  'graphics', 'objects', 'boat'),
+            
         }
-
+        print(self.level_frames['candle_light'])
     def run(self):
         while True:
             dt = self.clock.tick() / 1000

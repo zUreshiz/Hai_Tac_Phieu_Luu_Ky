@@ -1,7 +1,7 @@
 from settings import *
 from timer import Timer
 from os.path import join
-
+from math import sin
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames):
@@ -176,6 +176,7 @@ class Player(pygame.sprite.Sprite):
         
         if self.attacking and self.frame_index > len(self.frames[self.state]):
             self.attacking = False
+
     def get_state(self):
         if self.on_surface['floor']:
             if self.attacking:
