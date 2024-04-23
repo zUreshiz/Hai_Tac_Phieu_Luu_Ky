@@ -30,13 +30,14 @@ class Game:
             'small_chain': import_folder('.', 'graphics', 'level', 'small_chain'),
             'candle_light': import_folder('.', 'graphics', 'level', 'candle light'),
             'player': import_sub_folders('.', 'graphics', 'player'),
-            'saw': import_folder('..', 'graphics', 'enemies', 'saw', 'animation'),
-            'saw_chain': import_image('..',  'graphics', 'enemies', 'saw', 'saw_chain'),
-            'helicopter': import_folder('..', 'graphics', 'level', 'helicopter'),
-            'boat': import_folder('..',  'graphics', 'objects', 'boat'),
-            
+            'saw': import_folder('.', 'graphics', 'enemies', 'saw', 'animation'),
+            'saw_chain': import_image('.',  'graphics', 'enemies', 'saw', 'saw_chain'),
+            'helicopter': import_folder('.', 'graphics', 'level', 'helicopter'),
+            'boat': import_folder('.',  'graphics', 'objects', 'boat'),
+            'spike': import_image('.',  'graphics', 'enemies', 'spike_ball', 'Spiked Ball'),
+            'spike_chain': import_image('.',  'graphics', 'enemies', 'spike_ball', 'spiked_chain'),
+
         }
-        print(self.level_frames['candle_light'])
     def run(self):
         while True:
             dt = self.clock.tick() / 1000
