@@ -81,7 +81,7 @@ class Spike(Sprite):
         self.speed = speed
         self.start_angle = start_angle
         self.end_angle = end_angle
-        self.angle = start_angle
+        self.angle = self.start_angle
         self.direction = 1
         self.full_circle = True if self.end_angle == -1 else False
 
@@ -96,7 +96,7 @@ class Spike(Sprite):
         if not self.full_circle:
             if self.angle >= self.end_angle:
                 self.direction = -1
-            if self.angle >= self.start_angle:
+            if self.angle < self.start_angle:
                  self.direction = 1
             
 
