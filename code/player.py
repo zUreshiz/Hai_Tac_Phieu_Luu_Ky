@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
             self.jump = True
 
     def attack(self):
-        if not self.timers['attack block'].activate:
+        if not self.timers['attack block'].activate():
             self.attacking = True 
             self.frame_index = 0
             self.timers['attack block'].activate()
