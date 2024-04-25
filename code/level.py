@@ -28,7 +28,7 @@ class Level:
                 '''chuyển đổi từ grid position sang pixel position'''
                 match layer:
                     case 'BG' : z = Z_LAYERS['bg tiles']
-                    case 'FG' : z =  Z_LAYERS['fg']
+                    case 'FG' : z =  Z_LAYERS['bg tiles']
                     case _:  z =  Z_LAYERS['main']
 
 
@@ -39,11 +39,13 @@ class Level:
         for obj in tmx_map.get_layer_by_name('BG details'):
             if obj.name == 'static':
                 Sprite((obj.x, obj.y), obj.image,self.all_sprites, z = Z_LAYERS['bg tiles'])
-            # else:
-            #     AnimatedSprite((obj.x, obj.y), level_frames[obj.name], self.all_sprites, Z_LAYERS['bg tiles'])
-                # if obj.name == 'candle':
-                #     AnimatedSprite((obj.x, obj.y) + vector(-20, -20), level_frames['candle_light'], self.all_sprites, z = Z_LAYERS['bg tiles'])
-         #object                    
+            else:
+                AnimatedSprite((obj.x, obj.y), level_frames[obj.name], self.all_sprites, Z_LAYERS['bg tiles'])
+                if obj.name == 'candle':
+                    AnimatedSprite((obj.x, obj.y) + vector(-20, -20), level_frames['candle_light'], self.all_sprites, z = Z_LAYERS['bg tiles'])
+        
+        
+        #object                    
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name =='player':
                 self.player = Player(
@@ -56,6 +58,7 @@ class Level:
                 if obj.name in ('barrel', 'crate'):
                     Sprite((obj.x, obj.y), obj.image ,(self.all_sprites, self.collision_sprites))
                 else:
+                    
                     frames = level_frames[obj.name] if not 'palm' in obj.name else level_frames['palms'][obj.name]
                     if obj.name == 'floor_spike' and obj.properties['inverted']:
                       frames = [pygame.transform.flip(frame, False, True) for frame in frames]
