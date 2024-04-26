@@ -2,6 +2,7 @@ from settings import *
 from sprites import Sprite, AnimatedSprite, MovingSprite, Spike
 from player import Player
 from groups import AllSprite
+from enemies import Tooth, Shell, Pearl
 
 from random import uniform
 
@@ -14,12 +15,18 @@ class Level:
         self.collision_sprites = pygame.sprite.Group()
         self.semi_collision_sprites = pygame.sprite.Group()
         self.damage_sprites =  pygame.sprite.Group()
+        self.tooth_sprites = pygame.sprite.Group()
+        self.pearl_sprites = pygame.sprite.Group()
 
 
         self.setup(tmx_map, level_frames)
 
+        #frames
+        self.pearl_surf = level_frames['pearl']
+
     def setup(self, tmx_map, level_frames):
-        # tile
+
+        #tile
         for layer in ['BG', 'Terrain', 'FG', 'Platforms']:
             for x, y, surf in tmx_map.get_layer_by_name(layer).tiles():
                 groups = [self.all_sprites]   
@@ -72,7 +79,7 @@ class Level:
                     animation_speed = ANIMATION_SPEED if not 'palm' in obj.name else ANIMATION_SPEED + uniform(-1, 1)
                     AnimatedSprite((obj.x, obj.y), frames, groups, z, animation_speed)
 
-        #Moving Objects
+        #moving Objects
         for obj in tmx_map.get_layer_by_name('Moving Objects'):
             if obj.name == 'spike':
                 Spike(
@@ -120,8 +127,35 @@ class Level:
                        for y in range(top, bottom, 20):
                            Sprite((x,y), level_frames['saw_chain'], self.all_sprites, Z_LAYERS['bg details']) 
 
+        #enemies
+        for obj in tmx_map.get_layer_by_name('Enemies'):
+            if obj.name == 'tooth':
+                Tooth((obj.x, obj.y), level_frames['tooth'], (self.all_sprites, self.damage_sprites, self.tooth_sprites), self.collision_sprites)
+            if obj.name == 'shell':
+                Shell(
+                    pos=(obj.x, obj.y), 
+                    frames=level_frames['shell'], 
+                    groups=(self.all_sprites, self.collision_sprites), 
+                    reverse=obj.properties['reverse'], 
+                    player=self.player, 
+                    create_pearl =self.create_pearl)
 
+    def create_pearl(self, pos, direction):
+        Pearl(pos, (self.all_sprites, self.damage_sprites, self.pearl_sprites), self.pearl_surf , direction, 150)
+
+
+    def pearl_collision(self):
+        for sprite in self.collision_sprites:
+            pygame.sprite.spritecollide(sprite, self.pearl_sprites, True)
+
+    def hit_collision(self):
+        for sprite in self.damage_sprites:
+            if sprite.rect.colliderect(self.player.hitbox_rect):
+                if hasattr(sprite, 'pearl'):
+                    sprite.kill()
     def run(self, dt):
         self.display_surface.fill('black')
         self.all_sprites.update(dt)
+        self.pearl_collision()
+        self.hit_collision()
         self.all_sprites.draw(self.player.hitbox_rect.center)
