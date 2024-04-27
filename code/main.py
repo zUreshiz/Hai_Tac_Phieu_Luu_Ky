@@ -2,6 +2,8 @@ from settings import *
 from level import Level
 from pytmx.util_pygame import load_pygame
 from os.path import join
+from math import sin
+from data import Data
 
 from support import *
 
@@ -13,10 +15,12 @@ class Game:
         self.clock = pygame.time.Clock()
         self.import_assets()
 
+
+        self.data = Data()
         '''tmx_map là map test '''
         self.tmx_maps = {0: load_pygame(join('data','levels','test.tmx'))}
         '''current stage là level hiện tại của người chơi'''
-        self.current_stage = Level(self.tmx_maps[0], self.level_frames)
+        self.current_stage = Level(self.tmx_maps[0], self.level_frames, self.data)
 
     def import_assets(self):
         self.level_frames = {
@@ -39,7 +43,8 @@ class Game:
             'tooth': import_folder('.',  'graphics', 'enemies', 'tooth', 'run'),
             'shell': import_sub_folders('.', 'graphics', 'enemies', 'shell'),
             'pearl': import_image('.', 'graphics', 'enemies', 'bullets','pearl'),
-
+            'items': import_sub_folders('.', 'graphics',  'items'),
+            'particle': import_folder('.',  'graphics', 'effects', 'particle'),
 
         }
     def run(self):

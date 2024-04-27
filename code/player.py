@@ -4,10 +4,11 @@ from os.path import join
 from math import sin
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames):
+    def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames, data):
         #general setup
         super().__init__(groups)
         self.z = Z_LAYERS['main']
+        self.data = data
   
         #img
         self.frames, self.frame_index = frames, 0
@@ -38,7 +39,8 @@ class Player(pygame.sprite.Sprite):
             'wall jump': Timer(400),
             'wall slide block': Timer(250),
             'platform skip' : Timer(100),
-            'attack block' : Timer(100)
+            'attack block' : Timer(100),
+            'hit': Timer(400)
         }
 
     def input(self):
@@ -192,6 +194,18 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.state = 'jump' if self.direction.y < 0 else 'fall'
     
+    def get_damage(self):
+        if not self.timers['hit'].active:
+            self.data.health -=1
+            self.timers['hit'].activate()
+
+    def flicker(self):
+        if self.timers['hit'].active :
+            white_mask = pygame.mask.from_surface(self.image)
+            white_surf = white_mask.to_surface()
+            white_surf.set_colorkey('black')
+            self.image = white_surf
+
     def update(self, dt):
         self.old_rect = self.hitbox_rect.copy()
         self.update_timers()
@@ -201,4 +215,4 @@ class Player(pygame.sprite.Sprite):
         self.check_contact()
         self.get_state()
         self.animate(dt)
-        
+        self.flicker()
