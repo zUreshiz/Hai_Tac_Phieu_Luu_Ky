@@ -4,6 +4,8 @@ from pytmx.util_pygame import load_pygame
 from os.path import join
 from math import sin
 from data import Data
+from debug import debug
+from ui import UI
 
 from support import *
 
@@ -16,7 +18,8 @@ class Game:
         self.import_assets()
 
 
-        self.data = Data()
+        self.ui = UI(self.font, self.ui_frames)
+        self.data = Data(self.ui)
         '''tmx_map là map test '''
         self.tmx_maps = {0: load_pygame(join('data','levels','test.tmx'))}
         '''current stage là level hiện tại của người chơi'''
@@ -47,6 +50,14 @@ class Game:
             'particle': import_folder('.',  'graphics', 'effects', 'particle'),
 
         }
+
+
+        self.font = pygame.font.Font(join('.', 'graphics', 'ui','runescape_uf.ttf'), 40)
+        self.ui_frames = {
+            'heart' : import_folder('.','graphics','ui', 'heart'),
+            'coin' : import_image('.','graphics','ui', 'coin')
+
+        }
     def run(self):
         while True:
             dt = self.clock.tick() / 1000
@@ -56,7 +67,8 @@ class Game:
                     sys.exit()
             
             self.current_stage.run(dt)
-
+            self.ui.update(dt)
+            # debug(self.data.health)
             pygame.display.update()
 
 
