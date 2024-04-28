@@ -1,5 +1,6 @@
 from settings import *
 from math import sin, cos, radians
+from random import randint
 class Sprite(pygame.sprite.Sprite):
     def __init__(self, pos, surf = pygame.Surface((TILE_SIZE, TILE_SIZE)) , groups = None, z= Z_LAYERS['main']):
        super().__init__(groups)
@@ -133,4 +134,17 @@ class ParticleEffectSprite(AnimatedSprite):
         if self.frame_index < len(self.frames):
             self.image = self.frames[int(self.frame_index)]
         else: 
+            self.kill()
+
+class Cloud(Sprite):
+    def __init__(self, pos , surf, groups,z = Z_LAYERS['clouds'] ):
+        super().__init__(pos, surf, groups, z)
+        self.speed = randint(50, 120)
+        self.direction = -1
+        self.rect.midbottom = pos
+
+    def update(self,dt):
+        self.rect.x += self.direction * self.speed * dt
+
+        if self.rect.right <= 0:
             self.kill()
