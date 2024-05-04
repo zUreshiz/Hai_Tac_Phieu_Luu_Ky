@@ -4,7 +4,7 @@ from os.path import join
 from math import sin
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames, data):
+    def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames, data, attack_sound, jump_sound):
         #general setup
         super().__init__(groups)
         self.z = Z_LAYERS['main']
@@ -43,6 +43,11 @@ class Player(pygame.sprite.Sprite):
             'hit': Timer(400)
         }
 
+        #audio
+        self.attack_sound = attack_sound
+        self.jump_sound = jump_sound
+
+
     def input(self):
         '''Hàm xử lý sự kiện nhập từ bàn phím để điều khiển đối tượng di chuyển'''
         '''Biến keys lấy tất cả thông tin của các phím người dùng đang nhấn'''
@@ -74,6 +79,7 @@ class Player(pygame.sprite.Sprite):
             self.attacking = True 
             self.frame_index = 0
             self.timers['attack block'].activate()
+            self.attack_sound.play()
         
 
     def move(self, dt):
@@ -96,10 +102,12 @@ class Player(pygame.sprite.Sprite):
                 self.direction.y = -self.jump_height
                 self.timers['wall slide block'].activate()
                 self.hitbox_rect.bottom -=1
+                self.jump_sound.play()
             elif any((self.on_surface['left'], self.on_surface['right'])) and not self.timers['wall slide block'].active:
                 self.timers['wall jump'].activate()
                 self.direction.y = -self.jump_height
                 self.direction.x = 1 if self.on_surface['left'] else -1
+                self.jump_sound.play()
             self.jump = False
 
         self.collision('vertical')
