@@ -5,6 +5,15 @@ from timer import Timer
 
 class AllSprite(pygame.sprite.Group):
     def __init__(self, width, height, clouds,horizon_line, bg_tile = None, top_limit = 0):
+        """
+        Khởi tạo tất cả các sprite trong trò chơi.
+            width (int): Chiều rộng của màn hình.
+            height (int): Chiều cao của màn hình.
+            clouds (dict): Danh sách các hình ảnh đám mây.
+            horizon_line (int): Đường chân trời.
+            bg_tile (pygame.Surface, optional): Hình ảnh nền. Mặc định là None.
+            top_limit (int, optional): Giới hạn trên của màn hình. Mặc định là 0.
+        """
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         self.offset = vector()
@@ -49,6 +58,10 @@ class AllSprite(pygame.sprite.Group):
 
 
     def draw_large_cloud(self,dt):
+        """
+        Vẽ đám mây lớn.
+            dt (float): Thời gian giữa các khung hình.
+        """
         self.large_cloud_x += self.cloud_direction* self.large_cloud_speed * dt
         if self.large_cloud_x <= -self.large_cloud_width:
             self.large_cloud_x = 0
@@ -59,6 +72,7 @@ class AllSprite(pygame.sprite.Group):
             self.display_surface.blit(self.large_cloud, (left,top))
 
     def camera_constraint(self):
+        """Xác định ràng buộc của camera."""
         self.offset.x = self.offset.x if self.offset.x < self.borders['left'] else self.borders['left']
         self.offset.x = self.offset.x if self.offset.x > self.borders['right'] else self.borders['right']
         self.offset.y =  self.offset.y if self.offset.y > self.borders['bottom'] else  self.borders['bottom']
@@ -66,6 +80,7 @@ class AllSprite(pygame.sprite.Group):
 
 
     def draw_sky(self):
+        """Vẽ bầu trời."""
         self.display_surface.fill('#ddc6a9')
         horizon_pos = self.horizon_line+ self.offset.y
 
@@ -78,11 +93,17 @@ class AllSprite(pygame.sprite.Group):
         pygame.draw.line(self.display_surface, '#f5f1de', (0, horizon_pos), (WINDOW_WIDTH, horizon_pos), 5)
 
     def create_cloud(self):
+        """Tạo đám mây."""
         pos =(randint(self.width, self.width + 700),randint(self.borders['top'], self.horizon_line))
         surf = choice(self.small_clouds)
         Cloud(pos, surf, self)
 
     def draw(self, target_pos, dt):
+        """
+        Vẽ tất cả các sprite.
+            target_pos (tuple): Vị trí mục tiêu của camera.
+            dt (float): Thời gian giữa các khung hình.
+        """
         self.offset.x = -(target_pos[0] - WINDOW_WIDTH /2)
         self.offset.y = -(target_pos[1] - WINDOW_HEIGHT /2)
         self.camera_constraint()
@@ -100,12 +121,20 @@ class AllSprite(pygame.sprite.Group):
 
 class WorldSprites(pygame.sprite.Group):
     def __init__(self, data):
+        """
+        Khởi tạo tất cả các sprite trong overworld.
+            data (Data): Dữ liệu trò chơi.
+        """
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         self.data = data
         self.offset = vector()
 
     def draw(self, target_pos):
+        """
+        Vẽ tất cả các sprite trong thế giới của trò chơi.
+            target_pos (tuple): Vị trí mục tiêu của camera.
+        """
         self.offset.x = -(target_pos[0] - WINDOW_WIDTH /2)
         self.offset.y = -(target_pos[1] - WINDOW_HEIGHT /2)
 

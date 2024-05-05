@@ -5,6 +5,13 @@ from random import randint
 
 class Overworld:
     def __init__(self, tmx_map , data, overworld_frames, switch_stage):
+        """
+        Khởi tạo đối tượng Overworld.
+            tmx_map (pygame.Map): Bản đồ TMX của overworld.
+            data (object): Dữ liệu trò chơi.
+            overworld_frames (dict): Khung hình của overworld.
+            switch_stage (function): Hàm chuyển level.
+        """
         self.display_surface = pygame.display.get_surface()
         self.data = data
         self.switch_stage = switch_stage
@@ -18,6 +25,13 @@ class Overworld:
         self.create_path_sprites()
 
     def setup(self, tmx_map, overworld_frames):
+        """
+        Thiết lập overworld.
+
+        Tham số:
+            tmx_map (pygame.Map): Bản đồ TMX của thế giới.
+            overworld_frames (dict): Khung hình của thế giới.
+        """
         #Tile
         for layer in ['main', 'top']:
             for x,y,surf in tmx_map.get_layer_by_name(layer).tiles():
@@ -62,6 +76,9 @@ class Overworld:
                     paths = available_paths)
 
     def create_path_sprites(self):
+        """
+        Tạo các sprite đường đi.
+        """
         nodes = {node.level: vector(node.grid_pos) for node in self.node_spites}
         path_tiles = {}
 
@@ -117,6 +134,9 @@ class Overworld:
                         level = key)
 
     def input(self):
+        """
+        Xử lý sự kiện đầu vào từ người chơi.
+        """
         keys = pygame.key.get_pressed()
         if self.current_node and not self.icon.path:
             if keys[pygame.K_DOWN] or keys[pygame.K_s] and self.current_node.can_move('down'):
@@ -132,17 +152,28 @@ class Overworld:
                 self.switch_stage('level')
 
     def move(self, direction):
+        """
+        Di chuyển player đến node tiếp theo theo hướng đã cho.
+            direction (str): Hướng di chuyển ('up', 'down', 'left', 'right').
+        """
         path_key = int(self.current_node.paths[direction][0])
         path_reverse = True if self.current_node.paths[direction][-1] == 'r' else False
         path = self.paths[path_key]['pos'][:] if not path_reverse else self.paths[path_key]['pos'][::-1]
         self.icon.start_move(path)
 
     def get_current_node(self):
+        """
+        Xác định node hiện tại mà player đang đứng trên đó.
+        """
         nodes = pygame.sprite.spritecollide(self.icon, self.node_spites, False)
         if nodes:
             self.current_node = nodes[0]
 
     def run(self, dt):
+        """
+        Thực thi vòng lặp chính của Overworld.
+            dt (float): Thời gian chênh lệch giữa các frame.
+        """
         self.input()
         self.get_current_node()
         self.all_sprites.update(dt)

@@ -5,6 +5,17 @@ from math import sin
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, semi_collision_sprites, frames, data, attack_sound, jump_sound):
+        """
+        Khởi tạo đối tượng Player.
+            pos (tuple): Vị trí ban đầu của người chơi (x, y).
+            groups (pygame.sprite.Group): Nhóm sprite chứa người chơi.
+            collision_sprites (pygame.sprite.Group): Nhóm sprite cho va chạm toàn phần.
+            semi_collision_sprites (pygame.sprite.Group): Nhóm sprite cho va chạm bán phần.
+            frames (dict): Frame của người chơi.
+            data (object): Dữ liệu trò chơi.
+            attack_sound (pygame.mixer.Sound): Âm thanh của hành động attack.
+            jump_sound (pygame.mixer.Sound): Âm thanh của hành động nhảy.
+        """
         #general setup
         super().__init__(groups)
         self.z = Z_LAYERS['main']
@@ -50,8 +61,9 @@ class Player(pygame.sprite.Sprite):
         self.jump_sound.set_volume(0.1)
 
     def input(self):
-        '''Hàm xử lý sự kiện nhập từ bàn phím để điều khiển đối tượng di chuyển'''
-        '''Biến keys lấy tất cả thông tin của các phím người dùng đang nhấn'''
+        """
+        Xử lý sự kiện nhập từ bàn phím để điều khiển người chơi.
+        """
         keys = pygame.key.get_pressed()
         # Tạo biến input_vector nếu right +1, left -1
         input_vector = vector(0,0)
@@ -76,6 +88,9 @@ class Player(pygame.sprite.Sprite):
             self.jump = True
 
     def attack(self):
+        """
+        Xử lý hành động tấn công của người chơi.
+        """
         if not self.timers['attack block'].activate():
             self.attacking = True 
             self.frame_index = 0
@@ -84,7 +99,9 @@ class Player(pygame.sprite.Sprite):
         
 
     def move(self, dt):
-        '''tốc độ player khi di chuyển tung và hoành'''
+        """
+        Xử lý việc di chuyển của người chơi.
+        """
         #horizontal: hoành
         self.hitbox_rect.x += self.direction.x * self.speed * dt
         self.collision('horizontal')
@@ -122,6 +139,9 @@ class Player(pygame.sprite.Sprite):
 
 
     def check_contact(self):
+        """
+        Kiểm tra va chạm với các sprite khác.
+        """
         floor_rect = pygame.Rect(self.hitbox_rect.bottomleft,(self.hitbox_rect.width,2))
         right_rect = pygame.Rect(self.hitbox_rect.topright+ vector(0,self.hitbox_rect.height / 4),(2, self.hitbox_rect.height / 2))
         left_rect = pygame.Rect(self.hitbox_rect.topleft + vector(-2, self.hitbox_rect.height / 4), (2, self.hitbox_rect.height / 2))
@@ -140,7 +160,9 @@ class Player(pygame.sprite.Sprite):
                 self.platform = sprite
 
     def collision(self, axis):
-        '''Hàm để xử lý collision giữa player và sprite'''
+        """
+        Xử lý va chạm với sprite theo chiều ngang hoặc dọc.
+        """
         for sprite in self.collision_sprites:
             if sprite.rect.colliderect(self.hitbox_rect):
                 if axis == 'horizontal':
@@ -165,7 +187,9 @@ class Player(pygame.sprite.Sprite):
 
 
     def semi_collision(self):
-        '''Check xem platform có được active hay không'''
+        """
+        Kiểm tra va chạm bán phần với các sprite khác.
+        """
         if not self.timers['platform skip'].active:
             for sprite in self.semi_collision_sprites:
                 if sprite.rect.colliderect(self.hitbox_rect):
@@ -175,10 +199,16 @@ class Player(pygame.sprite.Sprite):
                             self.direction.y = 0
 
     def update_timers(self):
+        """
+        Cập nhật các bộ đếm thời gian.
+        """
         for timer in self.timers.values():
             timer.update()
 
     def animate(self, dt):
+        """
+        Chạy hoạt ảnh cho người chơi.
+        """
         self.frame_index += ANIMATION_SPEED * dt
         if self.state == 'attack' and self.frame_index >= len(self.frames[self.state]):
             self.state = 'idle'
@@ -189,6 +219,9 @@ class Player(pygame.sprite.Sprite):
             self.attacking = False
 
     def get_state(self):
+        """
+        Xác định trạng thái hiện tại của người chơi.
+        """
         if self.on_surface['floor']:
             if self.attacking:
                 self.state = 'attack'
@@ -204,11 +237,17 @@ class Player(pygame.sprite.Sprite):
                     self.state = 'jump' if self.direction.y < 0 else 'fall'
     
     def get_damage(self):
+        """
+        Giảm health của người chơi.
+        """
         if not self.timers['hit'].active:
             self.data.health -=1
             self.timers['hit'].activate()
 
     def flicker(self):
+        """
+        Hiệu ứng nhấp nháy khi bị tấn công.
+        """
         if self.timers['hit'].active :
             white_mask = pygame.mask.from_surface(self.image)
             white_surf = white_mask.to_surface()
@@ -216,6 +255,9 @@ class Player(pygame.sprite.Sprite):
             self.image = white_surf
 
     def update(self, dt):
+        """
+        Cập nhật trạng thái của người chơi.
+        """
         self.old_rect = self.hitbox_rect.copy()
         self.update_timers()
         self.input()

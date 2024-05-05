@@ -5,6 +5,10 @@ from timer import Timer
 
 class UI:
     def __init__(self, font, frames):
+        """Khởi tạo giao diện người dùng.
+            font (pygame.font.Font): Phông chữ cho giao diện.
+            frames (dict): Dữ liệu hình ảnh cho các yếu tố trong giao diện.
+        """
         self.display_surface = pygame.display.get_surface()
         self.sprites = pygame.sprite.Group()
         self.font = font
@@ -21,6 +25,7 @@ class UI:
 
 
     def display_text(self):
+        """Hiển thị số lượng đồng xu."""
         text_surf = self.font.render(str(self.coin_amount), False, 'gray')
         text_rect = text_surf.get_frect(topright=(self.display_surface.get_width()-50,5))
         self.display_surface.blit(text_surf, text_rect)
@@ -30,6 +35,9 @@ class UI:
 
 
     def create_hearts(self, amount):
+        """Tạo các hình trái tim.
+           Trả lại so_luong (int): Số lượng hình trái tim cần tạo.
+        """
         for sprite in self.sprites:
             sprite.kill()
         for heart in range(amount):
@@ -38,20 +46,34 @@ class UI:
             Heart((x,y), self.heart_frames, self.sprites)
 
     def show_coins(self, amount):
+        """Hiển thị số lượng đồng xu.
+           Trả lại so_luong (int): Số lượng đồng xu cần hiển thị.
+        """
         self.coin_amount = amount
 
 
     def update(self, dt):
+        """Cập nhật giao diện người dùng.
+            dt (float): Thời gian trôi qua kể từ lần cập nhật trước (đơn vị: milliseconds).
+        """
         self.sprites.update(dt)
         self.sprites.draw(self.display_surface)
         self.display_text()
 
 class Heart(AnimatedSprite):
     def __init__(self, pos, frames, groups):
+        """Khởi tạo một hình trái tim.
+            pos (tuple): Vị trí (x, y) của hình trái tim.
+            frames (list): Danh sách các frame cho hình trái tim.
+            groups (pygame.sprite.Group): Nhóm mà hình trái tim sẽ tham gia.
+        """
         super().__init__(pos, frames, groups)
         self.active = False
 
     def animate(self, dt):
+        """Thực hiện animation cho hình trái tim.
+            dt (float): Thời gian trôi qua kể từ lần cập nhật trước (đơn vị: milliseconds).
+        """
         self.frame_index += ANIMATION_SPEED * dt
         if self.frame_index < len(self.frames):
             self.image = self.frames[int(self.frame_index)]
@@ -60,6 +82,9 @@ class Heart(AnimatedSprite):
             self.frame_index = 0
 
     def update(self, dt):
+        """Cập nhật trạng thái của hình trái tim.
+            dt (float): Thời gian trôi qua kể từ lần cập nhật trước (đơn vị: milliseconds).
+        """
         if self.active:
             self.animate(dt)
         else:

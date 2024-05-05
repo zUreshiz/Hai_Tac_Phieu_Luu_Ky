@@ -4,6 +4,13 @@ from timer import Timer
 
 class Tooth(pygame.sprite.Sprite):
     def __init__(self, pos, frames, groups, collision_sprites):
+        """
+        Khởi tạo đối tượng Tooth.
+            pos (tuple): Vị trí ban đầu của Tooth (x, y).
+            frames (list): Danh sách các frame cho Tooth.
+            groups (pygame.sprite.Group): Nhóm sprite của Tooth.
+            collision_sprites (list): Danh sách các sprite mà Tooth có thể va chạm.
+        """
         super().__init__(groups)
         self.frames, self.frame_index = frames, 0
         self.image = self.frames[self.frame_index]
@@ -18,12 +25,17 @@ class Tooth(pygame.sprite.Sprite):
         self.hit_timer = Timer(250)
         
     def reverse(self):
+        """Đảo chiều di chuyển của Tooth."""
         if not self.hit_timer.active:
             self.direction *=-1
             self.hit_timer.activate()
 
 
     def update(self, dt):
+        """
+        Cập nhật trạng thái và vị trí của Tooth.
+            dt (float): Thời gian giữa các frame.
+        """
         self.hit_timer.update()
         
         #animate
@@ -48,6 +60,15 @@ class Shell(pygame.sprite.Sprite):
 
     
     def __init__(self, pos, frames, groups, reverse, player, create_pearl):
+        """
+        Khởi tạo đối tượng Shell.
+            pos (tuple): Vị trí ban đầu của Shell (x, y).
+            frames (dict): Tập hợp các frames cho Shell.
+            groups (pygame.sprite.Group): Nhóm sprite của Shell.
+            reverse (bool): True nếu muốn đảo chiều hình ảnh, False nếu không.
+            player (pygame.sprite.Sprite): Đối tượng người chơi.
+            create_pearl (function): Hàm để tạo ra một đối tượng Pearl.
+        """
         super().__init__(groups)
 
         if reverse:
@@ -73,6 +94,7 @@ class Shell(pygame.sprite.Sprite):
         self.create_pearl =create_pearl
 
     def state_management(self):
+        """Quản lý trạng thái của Shell."""
         player_pos, shell_pos = vector(self.player.hitbox_rect.center), vector(self.rect.center)
         player_near = shell_pos.distance_to(player_pos) < 500
         player_front = shell_pos.x < player_pos.x if self.bullet_direction > 0 else shell_pos.x > player_pos.x
@@ -85,6 +107,10 @@ class Shell(pygame.sprite.Sprite):
             self.shoot_timer.activate()
 
     def update(self, dt):
+        """
+        Cập nhật trạng thái và vị trí của Shell.
+            dt (float): Thời gian giữa các khung hình.
+        """
         self.shoot_timer.update()
         self.state_management()
 
@@ -106,6 +132,14 @@ class Shell(pygame.sprite.Sprite):
 
 class Pearl(pygame.sprite.Sprite):
     def __init__(self, pos, groups, surf, direction, speed):
+        """
+        Khởi tạo đối tượng Pearl.
+            pos (tuple): Vị trí ban đầu của Pearl (x, y).
+            groups (pygame.sprite.Group): Nhóm sprite của Pearl.
+            surf (pygame.Surface): Hình ảnh của Pearl.
+            direction (int): Hướng di chuyển của Pearl (1 hoặc -1).
+            speed (int): Tốc độ di chuyển của Pearl.
+        """
         self.pearl = True
         super().__init__(groups)
         self.image = surf
@@ -117,11 +151,16 @@ class Pearl(pygame.sprite.Sprite):
         self.timers['lifetime'].activate()
     
     def reverse(self):
+        """Đảo hướng di chuyển của Pearl."""
         if not self.timers['reverse'].active:
             self.direction *= -1 
             self.timers['reverse'].activate()
 
     def update(self, dt):
+        """
+        Cập nhật vị trí và thời gian sống của Pearl.
+            dt (float): Thời gian giữa các khung hình.
+        """
         for timer in self.timers.values():
             timer.update()
 
