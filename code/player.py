@@ -45,8 +45,9 @@ class Player(pygame.sprite.Sprite):
 
         #audio
         self.attack_sound = attack_sound
+        self.attack_sound.set_volume(0.1)
         self.jump_sound = jump_sound
-
+        self.jump_sound.set_volume(0.1)
 
     def input(self):
         '''Hàm xử lý sự kiện nhập từ bàn phím để điều khiển đối tượng di chuyển'''

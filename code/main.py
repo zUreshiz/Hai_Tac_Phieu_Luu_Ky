@@ -23,12 +23,21 @@ class Game:
         self.data = Data(self.ui)
         '''tmx_map là map test '''
         self.tmx_maps = {
-            0: load_pygame(join('.','data','levels','test.tmx'))
+            0: load_pygame(join('.','data','levels','test.tmx')),
+            1: load_pygame(join('.','data','levels','1.tmx')),
+            2: load_pygame(join('.','data','levels','2.tmx')),
+            3: load_pygame(join('.','data','levels','3.tmx')),
+            4: load_pygame(join('.','data','levels','4.tmx')),
+            5: load_pygame(join('.','data','levels','5.tmx')),
+
+
+
             }
         self.tmx_overworld = load_pygame(join('.','data','overworld','overworld.tmx'))
         '''current stage là level hiện tại của người chơi'''
         self.current_stage = Level(self.tmx_maps[self.data.current_level], self.level_frames, self.audio_files, self.data, self.switch_stage)
         self.bg_music.play(-1)
+        
     def switch_stage(self, target, unlock = 0):
         if target == 'level':
             self.current_stage = Level(self.tmx_maps[self.data.current_level], self.level_frames, self.audio_files, self.data, self.switch_stage)
@@ -101,7 +110,8 @@ class Game:
             'pearl': pygame.mixer.Sound(join('.', 'audio', 'pearl.wav')),
         }
         self.bg_music = pygame.mixer.Sound(join('.', 'audio', 'starlight_city.mp3'))
-        self.bg_music.set_volume(0.5)
+        self.bg_music.set_volume(0.2)
+
     def check_game_over(self):
         if self.data.health <= 0:
             pygame.quit()

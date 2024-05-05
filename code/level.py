@@ -15,6 +15,7 @@ class Level:
         self.level_width = tmx_map.width * TILE_SIZE
         self.level_bottom = tmx_map.height * TILE_SIZE
         tmx_level_properties = tmx_map.get_layer_by_name('Data')[0].properties
+
         self.level_unlock = tmx_level_properties['level_unlock']
         if tmx_level_properties['bg']:
             bg_tile = level_frames['bg_tiles'][tmx_level_properties['bg']]
@@ -46,9 +47,9 @@ class Level:
 
         #audio
         self.coin_sound = audio_files['coin']
-        self.coin_sound.set_volume(0.4)
+        self.coin_sound.set_volume(0.1)
         self.damage_sound = audio_files['damage']
-        self.damage_sound.set_volume(0.5)
+        self.damage_sound.set_volume(0.8)
         self.pearl_sound = audio_files['pearl']
 
         
@@ -92,7 +93,7 @@ class Level:
                     frames = level_frames['player'],
                     data = self.data,
                     attack_sound = audio_files['attack'],
-                    jump_sound = audio_files['jump'])
+                    jump_sound = audio_files['jump'],)
             else:
                 if obj.name in ('barrel', 'crate'):
                     Sprite((obj.x, obj.y), obj.image ,(self.all_sprites, self.collision_sprites))

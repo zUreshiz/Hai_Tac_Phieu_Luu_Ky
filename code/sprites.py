@@ -182,10 +182,10 @@ class Icon(pygame.sprite.Sprite):
 
         self.rect = self.image.get_frect(center = pos)
 
-    def can_move(self, path):
-        self.rect.center = path[0]
-        self.path = path[1:]
-        self.find_path()
+    # def can_move(self, path):
+    #     self.rect.center = path[0]
+    #     self.path = path[1:]
+    #     self.find_path()
 
     def start_move(self, path):
         self.rect.center = path[0]
@@ -194,9 +194,9 @@ class Icon(pygame.sprite.Sprite):
 
     def find_path(self):
         if self.path:
-            if self.rect.centerx == self.path[0][0]:
+            if self.rect.centerx == self.path[0][0]: #vertical
                 self.direction = vector(0, 1 if self.path[0][1] > self.rect.centery else -1)
-            else:
+            else: #horizontal 
                 self.direction = vector(1 if self.path[0][0] > self.rect.centerx else -1, 0)
         else:
             self.direction = vector()
