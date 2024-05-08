@@ -6,7 +6,7 @@ Hướng dẫn cách chơi:
  - Nhảy: SPACE
  - Tấn công: X
  - Lựa chọn: Enter
- - Tạm ngừng ESC
+ - Tạm ngừngtrò chơi: ESC
   
   
   
