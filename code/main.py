@@ -25,7 +25,7 @@ class Game:
         self.data = Data(self.ui)
         '''tmx_map là map test '''
         self.tmx_maps = {
-            0: load_pygame(join('.','data','levels','test.tmx')),
+            0: load_pygame(join('.','data','levels','0.tmx')),
             1: load_pygame(join('.','data','levels','1.tmx')),
             2: load_pygame(join('.','data','levels','2.tmx')),
             3: load_pygame(join('.','data','levels','3.tmx')),
@@ -178,7 +178,7 @@ class Game:
 
     def restart_game(self):
         """Khởi động lại trò chơi khi người chơi muốn chơi lại."""
-        self.data.health = 6  # Đặt lại máu
+        self.data.health = 5  # Đặt lại máu
         self.data.coins = 0  
         self.current_stage = Level(self.tmx_maps[self.data.current_level], self.level_frames, self.audio_files, self.data, self.switch_stage)
 

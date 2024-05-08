@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 500
         self.gravity = 1000
         self.jump = False
-        self.jump_height = 900
+        self.jump_height = 700
         self.attacking = False
 
         #collision: va chạm

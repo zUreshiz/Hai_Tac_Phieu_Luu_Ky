@@ -89,7 +89,7 @@ class Shell(pygame.sprite.Sprite):
         self.old_rect = self.rect.copy()
         self.z = Z_LAYERS['main']
         self.player = player
-        self.shoot_timer = Timer(2000)
+        self.shoot_timer = Timer(1500)
         self.has_fired = False
         self.create_pearl =create_pearl
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="24" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="245">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="24" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="263">
  <tileset firstgid="1" source="../tilesets/outside.tsx"/>
  <tileset firstgid="49" source="../tilesets/items.tsx"/>
  <tileset firstgid="54" source="../tilesets/inside.tsx"/>
@@ -8,7 +8,7 @@
  <tileset firstgid="224" source="../tilesets/enemies.tsx"/>
  <tileset firstgid="224" source="../tilesets/grass.tsx"/>
  <tileset firstgid="229" source="../tilesets/objects.tsx"/>
- <layer id="9" name="BG" width="24" height="30" visible="0">
+ <layer id="9" name="BG" width="24" height="30">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -42,7 +42,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="12" name="BG details" class="window" visible="0"/>
+ <objectgroup id="12" name="BG details" class="window"/>
  <layer id="1" name="Terrain" width="24" height="30">
   <data encoding="csv">
 162,162,158,178,178,178,178,178,178,178,178,178,178,178,178,178,178,178,178,178,178,159,162,162,
@@ -91,7 +91,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,219,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -111,7 +111,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="FG" width="24" height="30" visible="0">
+ <layer id="10" name="FG" width="24" height="30">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -147,18 +147,13 @@
  </layer>
  <objectgroup id="4" name="Objects">
   <object id="4" name="flag" gid="232" x="1184" y="384" width="68" height="186"/>
-  <object id="15" name="player" gid="236" x="1000.33" y="360.598" width="74" height="56"/>
+  <object id="15" name="player" gid="236" x="449.83" y="1598.6" width="74" height="56"/>
   <object id="91" name="saw" x="960" y="1536" width="64" height="64">
    <properties>
     <property name="speed" type="int" value="0"/>
    </properties>
   </object>
   <object id="134" name="saw" x="352" y="352" width="64" height="64">
-   <properties>
-    <property name="speed" type="int" value="0"/>
-   </properties>
-  </object>
-  <object id="135" name="saw" x="352" y="736" width="64" height="64">
    <properties>
     <property name="speed" type="int" value="0"/>
    </properties>
@@ -208,19 +203,24 @@
     <property name="inverted" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="192" name="floor_spike" gid="1073742063" x="512" y="576" width="64" height="64">
+  <object id="192" name="floor_spike" gid="1073742063" x="319.917" y="576.042" width="64" height="64">
    <properties>
-    <property name="inverted" type="bool" value="true"/>
+    <property name="inverted" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="193" name="floor_spike" gid="1073742063" x="640" y="384" width="64" height="64">
+  <object id="193" name="floor_spike" gid="1073742063" x="640.591" y="319.773" width="64" height="64">
    <properties>
-    <property name="inverted" type="bool" value="true"/>
+    <property name="inverted" type="bool" value="false"/>
    </properties>
   </object>
   <object id="232" name="saw" x="320" y="1472" width="64" height="64">
    <properties>
     <property name="speed" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="245" name="floor_spike" gid="239" x="256.583" y="576.167" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
@@ -262,6 +262,13 @@
     <property name="flip" type="bool" value="false"/>
     <property name="platform" type="bool" value="false"/>
     <property name="speed" type="int" value="60"/>
+   </properties>
+  </object>
+  <object id="246" name="helicopter" x="475" y="324.667" width="10" height="565.333">
+   <properties>
+    <property name="flip" type="bool" value="false"/>
+    <property name="platform" type="bool" value="true"/>
+    <property name="speed" type="int" value="100"/>
    </properties>
   </object>
  </objectgroup>
@@ -323,6 +330,15 @@
   <object id="242" name="silver" gid="52" x="704" y="1280" width="64" height="64"/>
   <object id="243" name="gold" gid="50" x="448" y="1536" width="64" height="64"/>
   <object id="244" name="gold" gid="50" x="768" y="1408" width="64" height="64"/>
+  <object id="247" name="skull" gid="53" x="703.875" y="192.25" width="64" height="64"/>
+  <object id="248" name="skull" gid="53" x="832.5" y="191.75" width="64" height="64"/>
+  <object id="254" name="silver" gid="52" x="767" y="767" width="64" height="64"/>
+  <object id="255" name="silver" gid="52" x="639.333" y="767.667" width="64" height="64"/>
+  <object id="256" name="silver" gid="52" x="637.5" y="830.667" width="64" height="64"/>
+  <object id="257" name="silver" gid="52" x="770" y="830" width="64" height="64"/>
+  <object id="259" name="silver" gid="52" x="705" y="832" width="64" height="64"/>
+  <object id="260" name="diamond" gid="49" x="704.5" y="767" width="64" height="64"/>
+  <object id="261" name="diamond" gid="49" x="1280.5" y="127.5" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="6" name="Enemies">
   <object id="223" name="tooth" gid="238" x="512" y="1728" width="48" height="46"/>
@@ -333,8 +349,24 @@
   <object id="229" name="tooth" gid="238" x="704" y="1728" width="48" height="46"/>
   <object id="230" name="tooth" gid="238" x="896" y="1728" width="48" height="46"/>
   <object id="231" name="tooth" gid="238" x="256" y="1280" width="48" height="46"/>
+  <object id="251" name="shell" gid="237" x="1274" y="1469.67" width="76" height="46">
+   <properties>
+    <property name="reverse" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="252" name="floor_spike" gid="239" x="831.955" y="1536.18" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="253" name="shell" gid="237" x="1276" y="385" width="76" height="46">
+   <properties>
+    <property name="reverse" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="262" name="tooth" gid="238" x="1034.5" y="384" width="48" height="46"/>
  </objectgroup>
- <objectgroup id="2" name="Water" visible="0"/>
+ <objectgroup id="2" name="Water"/>
  <objectgroup id="8" name="Data">
   <object id="28" name="Data" x="0" y="0" width="64" height="64">
    <properties>
